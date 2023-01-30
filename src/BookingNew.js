@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useParams, useRouteMatch, Link } from "react-router-dom";
+import { useParams, useRouteMatch, Link, useHistory } from "react-router-dom";
 
 
-function BookingNew({ flights }) {
+function BookingNew({ flights, onBookingAdd }) {
     const { flightId } = useParams()
-    const route = useRouteMatch().url
+    const history = useHistory();
+    const route = useRouteMatch().url;
     const [newBookingForm, setNewBookingForm] = useState({
         flight_id: flightId,
         name: "",
@@ -30,6 +31,17 @@ function BookingNew({ flights }) {
         .then(resp=>resp.json())
         .then(newBooking => {
             console.log("posted!")
+            console.log(newBooking)
+            const newBookingobj = {...newBooking, passenger:{
+                name: newBookingForm.name,
+                id: newBooking.passenger_id
+            }}
+            onBookingAdd(newBookingobj)
+            history.push(route.replace("/newBooking",`/bookings/${newBooking.id}`))
+// flight_id  : 9
+// id :  197
+// passenger_id : 16
+// seat :  "C02"
         })
     }
     console.log(newBookingForm)

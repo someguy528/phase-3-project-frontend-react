@@ -6,7 +6,7 @@ import BookingDetailEdit from "./BookingDetailEdit"
 import BookingNew from "./BookingNew"
 import { useState } from "react"
 
-function FlightList({flights, onBookingChange, onBookingDelete}){
+function FlightList({flights, onBookingChange, onBookingDelete, onBookingAdd}){
     const [mostBookings, setMostBookings] = useState("Whats the Most Bookings for a passenger?")
     const [mostPassengers, setMostPassengers] = useState("Who has the Most Bookings?")
 
@@ -52,7 +52,7 @@ function FlightList({flights, onBookingChange, onBookingDelete}){
                     <BookingDetail flights={flights} onBookingDelete={onBookingDelete} />
                 </Route>
                 <Route exact path={`${route}/:flightId/newBooking`} >
-                    <BookingNew flights={flights} />
+                    <BookingNew flights={flights} onBookingAdd={onBookingAdd} />
                 </Route>
                 <Route exact path={`${route}/:flightId`} >
                     <Flight flights={flights} />

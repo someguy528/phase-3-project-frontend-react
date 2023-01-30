@@ -34,6 +34,18 @@ function App() {
     setFlights(changedBookingFlights)
   }
 
+  function handleBookingAdd(newBookingObj){
+    const newBookingFlights = flights.map(f=>{
+      if (f.id === newBookingObj.flight_id){
+        const bookingsSpread = f.bookings
+        f.bookings = [...bookingsSpread, newBookingObj]
+        return f
+      }
+      else return f
+    })
+    setFlights(newBookingFlights)
+  }
+
   function handleBookingDelete(deletedBooking){
     const deletedBookingFlights = flights.map(f=>{
       if (f.id === deletedBooking.flight_id){
@@ -54,7 +66,7 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/flights"> 
-          <FlightList flights={flights} onBookingChange={handleBookingChange} onBookingDelete={handleBookingDelete} />
+          <FlightList flights={flights} onBookingChange={handleBookingChange} onBookingDelete={handleBookingDelete} onBookingAdd={handleBookingAdd} />
         </Route>
         <Route exact path='/' >
           <Home />
