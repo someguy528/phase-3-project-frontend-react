@@ -20,9 +20,6 @@ function BookingDetail({flights, onBookingDelete}){
             console.log(deletedBooking)
             onBookingDelete(deletedBooking);
             history.push(route.replace(`/bookings/${id}`,""))
-            // setTimeout(()=> history.push(route.replace(`/booking/${deletedBooking.id}`,"")), 1000)
-            
-            // history.push("/")
         })
         
     }
@@ -37,8 +34,6 @@ function BookingDetail({flights, onBookingDelete}){
                 
                 <Link to={`${route}/edit`} > Change Seating </Link>
                 <p> <button onClick={handleDeleteClick} > Delete Booking </button> </p>
-                {/* <button onClick={()=> history.push(route.replace(`/bookings/${id}`,""))} > click me</button>
-                <button onClick={()=> console.log(route.replace(`/bookings/${id}`,""))} > click me</button> */}
                 </ul>
         </div>
     )
