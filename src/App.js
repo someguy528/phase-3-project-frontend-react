@@ -1,25 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
+import FlightList from './FlightList';
+import Home from './Home';
+import NavBar from './NavBar';
+import { Switch, Route } from 'react-router-dom';
 
 function App() {
+  const [flights, setFlights] = useState([])
+  const [isLoaded, setLoaded] = useState(false)
+
+  useEffect(()=> {
+    fetch("http://localhost:9292/flights")
+    .then(resp => resp.json())
+    .then(data => {
+      setFlights(data);
+      setLoaded(true);
+    })
+  },[])
+
+
+  if (!isLoaded) return <h1>Loading..</h1>
+  console.log(flights)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+      <Switch>
+        <Route path="/flights"> 
+          <FlightList flights={flights} />
+        </Route>
+        <Route exact path='/' >
+          <Home />
+        </Route>
+      </Switch>
     </div>
-  );
+  )
 }
 
 export default App;
