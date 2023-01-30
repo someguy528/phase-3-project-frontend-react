@@ -5,7 +5,7 @@ import { Link, useRouteMatch } from "react-router-dom"
 
 function BookingDetail({flights}){
     const route = useRouteMatch().url
-    const {flightId, bookingId} = useParams()
+    const {flightId, bookingId} = useParams();
 
     const booking = flights.find(f => f.id === parseFloat(flightId)).bookings.find(b => b.id === parseFloat(bookingId))
 

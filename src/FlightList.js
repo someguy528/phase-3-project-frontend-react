@@ -4,7 +4,7 @@ import { Switch, Route, Link, useRouteMatch } from "react-router-dom"
 import BookingDetail from "./BookingDetail"
 import BookingDetailEdit from "./BookingDetailEdit"
 
-function FlightList({flights}){
+function FlightList({flights, onBookingChange}){
 
 
     const route = useRouteMatch().url
@@ -21,7 +21,7 @@ function FlightList({flights}){
                     {allFlights}
                 </Route>
                 <Route exact path={`${route}/:flightId/bookings/:bookingId/edit`} >
-                    <BookingDetailEdit flights={flights} />
+                    <BookingDetailEdit flights={flights} onBookingChange={onBookingChange} />
                 </Route>
                 <Route exact path={`${route}/:flightId/bookings/:bookingId`} >
                     <BookingDetail flights={flights} />

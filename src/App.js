@@ -18,6 +18,25 @@ function App() {
     })
   },[])
 
+  function handleBookingChange(changedBooking){
+    const changedBookingFlights = flights.map(f => {
+      if (f.id === changedBooking.flight_id){
+
+        const changedBookings = f.bookings.map(b => {
+          if (b.id === changedBooking.id){
+            return { ...b , seat: changedBooking.seat}
+          }
+          else return b
+        })
+        f.bookings = changedBookings
+        return f
+
+      }
+      else return f
+    })
+    setFlights(changedBookingFlights)
+  }
+
 
   if (!isLoaded) return <h1>Loading..</h1>
   console.log(flights)
@@ -27,7 +46,7 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/flights"> 
-          <FlightList flights={flights} />
+          <FlightList flights={flights} onBookingChange={handleBookingChange} />
         </Route>
         <Route exact path='/' >
           <Home />
