@@ -34,6 +34,7 @@ function BookingDetailEdit({flights, onBookingChange}){
             <label> Editing Seating for Booking # {booking.id} </label>
             <input type="text" value={bookingForm} onChange={onFormChange} />
             <button>Submit</button>
+            
         </form>
     )
 

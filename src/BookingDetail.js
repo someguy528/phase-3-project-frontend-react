@@ -34,6 +34,7 @@ function BookingDetail({flights, onBookingDelete}){
                 
                 <Link to={`${route}/edit`} > Change Seating </Link>
                 <p> <button onClick={handleDeleteClick} > Delete Booking </button> </p>
+                <Link to={`${route.replace(`/bookings/${bookingId}`, "")}`}> Go Back to Flight </Link>
                 </ul>
         </div>
     )

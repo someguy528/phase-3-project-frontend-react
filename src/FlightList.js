@@ -3,6 +3,7 @@ import FlightListing from "./FlightListing"
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom"
 import BookingDetail from "./BookingDetail"
 import BookingDetailEdit from "./BookingDetailEdit"
+import BookingNew from "./BookingNew"
 import { useState } from "react"
 
 function FlightList({flights, onBookingChange, onBookingDelete}){
@@ -49,6 +50,9 @@ function FlightList({flights, onBookingChange, onBookingDelete}){
                 </Route>
                 <Route exact path={`${route}/:flightId/bookings/:bookingId`} >
                     <BookingDetail flights={flights} onBookingDelete={onBookingDelete} />
+                </Route>
+                <Route exact path={`${route}/:flightId/newBooking`} >
+                    <BookingNew flights={flights} />
                 </Route>
                 <Route exact path={`${route}/:flightId`} >
                     <Flight flights={flights} />
