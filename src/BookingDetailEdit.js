@@ -8,15 +8,12 @@ function BookingDetailEdit({flights, onBookingChange}){
     const history = useHistory();
     const route = useRouteMatch().url;
     console.log(booking)
-    
-    
 
     function onFormChange(e){
         setBookingForm(()=> e.target.value)
     }
     function onSubmitForm(e){
         e.preventDefault();
-        const newBooking = {...booking, seat: bookingForm, passenger : booking.passenger}
         fetch(`http://localhost:9292/bookings/${bookingId}`, {
             method: "PATCH",
             headers: {
@@ -27,12 +24,7 @@ function BookingDetailEdit({flights, onBookingChange}){
         .then(resp => resp.json())
         .then(changedBooking => {
             onBookingChange(changedBooking);
-
-            console.log(changedBooking);
-            console.log("Patched!");
-            // setTimeout( ()=> history.push(route.replace("/edit","")) ,2000)
-            setTimeout( ()=> history.push("/") ,2000)
-            
+            history.push(route.replace("/edit",""))
         })
 
     }
