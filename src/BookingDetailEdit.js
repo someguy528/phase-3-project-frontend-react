@@ -16,7 +16,9 @@ function BookingDetailEdit({flights}){
             headers: {
                 "Content-Type":"application/json"
             },
-            body: JSON.stringify(bookingForm)
+            body: JSON.stringify({
+                seat: bookingForm
+            })
         })
         .then(resp => resp.json())
         .then(patchedBooking => {
