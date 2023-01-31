@@ -1,5 +1,5 @@
 import { useParams, useHistory , useRouteMatch } from "react-router-dom"
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 function BookingDetailEdit({flights, onBookingChange}){
     const {flightId, bookingId} = useParams(); 

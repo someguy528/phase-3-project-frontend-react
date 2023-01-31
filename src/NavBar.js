@@ -1,4 +1,4 @@
-import { NavLink, withRouter } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function NavBar() {
 
@@ -22,9 +22,6 @@ function NavBar() {
             <NavLink exact to="/flights/new" style={defaultStyle} activeStyle={clickedStyle} className="navLink" >
                 New Flight
             </NavLink>
-            {/* <NavLink exact to="/news/addarticle" style={defaultStyle} activeStyle={clickedStyle} className="navLink" >
-                Add An Article 
-            </NavLink> */}
         </div>
     )
 };

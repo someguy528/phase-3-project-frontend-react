@@ -39,10 +39,6 @@ function BookingNew({ flights, onBookingAdd }) {
             }}
             onBookingAdd(newBookingobj)
             history.push(route.replace("/newBooking",`/bookings/${newBooking.id}`))
-// flight_id  : 9
-// id :  197
-// passenger_id : 16
-// seat :  "C02"
         })
     }
     console.log(newBookingForm)

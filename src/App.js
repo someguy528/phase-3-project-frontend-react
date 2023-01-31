@@ -23,6 +23,16 @@ function App() {
     setFlights(newFlights)
   }
 
+  function handleFlightEdit(changedFlightObj){
+    const changedFlights = flights.map(f => {
+      if(f.id === changedFlightObj.id){
+        return changedFlightObj
+      }
+      else return f 
+    })
+    setFlights(changedFlights)
+  }
+
   function handleFlightDelete(deletedFlight){
     const updatedFlights = flights.filter(f => f.id !== deletedFlight.id)
     setFlights(updatedFlights)
@@ -78,7 +88,8 @@ function App() {
         <Route path="/flights"> 
           <FlightList flights={flights} onBookingChange={handleBookingChange} 
           onBookingDelete={handleBookingDelete} onBookingAdd={handleBookingAdd}
-          onFlightAdd={handleFlightAdd} onFlightDelete={handleFlightDelete} />
+          onFlightAdd={handleFlightAdd} onFlightDelete={handleFlightDelete} 
+          onFlightEdit={handleFlightEdit} />
         </Route>
         <Route exact path='/' >
           <Home />
