@@ -11,6 +11,7 @@ function BookingNew({ flights, onBookingAdd }) {
         name: "",
         seat: ""
     });
+    const parentFlight = flights.find(f => f.id === parseFloat(flightId))
 
     function handleFormChange(e){
         setNewBookingForm({
@@ -21,6 +22,20 @@ function BookingNew({ flights, onBookingAdd }) {
 
     function handleFormSubmit(e){
         e.preventDefault();
+        if(parentFlight.bookings.length >= 20){
+            alert("The Bookings for this Flight is Full!")
+            return history.push(route.replace("/newBooking",``))
+        }
+        if(parentFlight.bookings.some(booking => booking.passenger.name === newBookingForm.name )){
+            alert("This Passenger already has a booking on this flight!")
+            return history.push(route.replace("/newBooking",``))
+        }
+        if(newBookingForm.seat === "" ){
+            return alert("A seat needs to be picked!")
+        }
+        if(newBookingForm.name === "" ){
+            return alert("A passenger must be booked!")
+        }
         // fetch(`http://localhost:9292/bookings`, {
         fetch(`http://localhost:9292/flights/${flightId}/bookings`, {
             method: "POST",
@@ -44,8 +59,20 @@ function BookingNew({ flights, onBookingAdd }) {
     console.log(newBookingForm)
 
 
+    const optionsArray = Array.from({length: 10}, (_, i) => i < 9 ? "A" + "0" + (i+1) : "A" + (i+1))
+    const optionsArray2 = Array.from({length: 10}, (_, i) => i < 9 ? "B" + "0" + (i+1) : "B" + (i+1))
+    const seatsArray = optionsArray.concat(optionsArray2)
+
+    const seatOptions = seatsArray.map(seat => {
+        if(!parentFlight.bookings.some(booking => booking.seat === seat))
+        return ( <option key={seat} value={seat} > {seat} </option> )
+    })
+    // setNewBookingForm({...newBookingForm, seat : })
+
+
     return (
         <div>
+            <h2> Create A Booking</h2>
         <form onSubmit={handleFormSubmit} >
             <p>
                 <label>Passenger Name</label>
@@ -53,7 +80,11 @@ function BookingNew({ flights, onBookingAdd }) {
             </p>
             <p>
                 <label>Seating</label>
-                <input type="text" name="seat" value={newBookingForm.seat} onChange={handleFormChange} ></input>
+                {/* <input type="text" name="seat" value={newBookingForm.seat} onChange={handleFormChange} ></input> */}
+                <select name="seat" onChange={handleFormChange} value={newBookingForm.seat} >
+                    <option value="" > Pick a Seat </option>
+                    {seatOptions}
+                </select>
             </p>
             <button >Submit Booking</button>
         </form>

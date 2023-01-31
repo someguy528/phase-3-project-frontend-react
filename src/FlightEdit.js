@@ -24,6 +24,9 @@ function FlightEdit({flights, onFlightEdit}){
 
     function handleEditSubmit(e){
         e.preventDefault()
+        if(flightEditForm.destination === ""){
+            return alert("A destination must be picked!")
+        }
         fetch(`http://localhost:9292/flights/${flightId}`, {
             method: "PATCH",
             headers: {

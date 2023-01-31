@@ -37,7 +37,10 @@ function Flight({flights, onFlightDelete}){
             <h4> Flight ID : {flight.id}</h4>
             <button onClick={handleDeleteClick} >Delete Flight</button>
             <Link to={`${route}/edit`}> Edit Flight Info </Link>
-            <div><Link to={`${route}/newBooking`} >Create A Booking</Link></div>
+            {flight.bookings.length < 20 ? 
+            <div><Link to={`${route}/newBooking`} >Create A Booking</Link></div> : 
+            <header>Bookings Full! </header> }
+            
             
             <h2> Bookings List </h2>
 

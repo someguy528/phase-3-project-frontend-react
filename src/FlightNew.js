@@ -8,7 +8,7 @@ function FlightNew({onFlightAdd}){
     const [flightForm, setFlightForm] = useState({
         destination: "",
         departure: "2023-07-19",
-        plane_id: 3
+        plane_id: 0
     })
     console.log(availablePlanes)
 
@@ -34,6 +34,12 @@ function FlightNew({onFlightAdd}){
 
     function handleSubmit(e){
         e.preventDefault();
+        if(flightForm.destination === ""){
+            return alert("A destination must be picked!")
+        }
+        if(flightForm.plane_id === 0){
+            return alert("A plane must be selected!")
+        }
         const isoTime = new Date(flightForm.departure).toISOString();
         const formattedFlightForm = {...flightForm, departure: isoTime}
         fetch("http://localhost:9292/flights", {
@@ -78,6 +84,7 @@ function FlightNew({onFlightAdd}){
              <header> Destination </header>
              <input type="text" value={flightForm.destination} onChange={handleChange} name="destination" />
              <select name="plane_id" value={flightForm.plane_id} onChange={handleChange} > 
+                <option value={0} >Pick a plane</option>
                 {planeOptions}
              </select>
              <button>Submit</button>
