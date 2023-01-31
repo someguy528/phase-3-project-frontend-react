@@ -22,7 +22,7 @@ function BookingNew({ flights, onBookingAdd }) {
 
     function handleFormSubmit(e){
         e.preventDefault();
-        if(parentFlight.bookings.length >= 20){
+        if(parentFlight.bookings.length >= parentFlight.plane.capacity ){
             alert("The Bookings for this Flight is Full!")
             return history.push(route.replace("/newBooking",``))
         }

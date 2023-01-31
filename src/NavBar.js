@@ -22,6 +22,9 @@ function NavBar() {
             <NavLink exact to="/flights/new" style={defaultStyle} activeStyle={clickedStyle} className="navLink" >
                 New Flight
             </NavLink>
+            <NavLink exact to="/passengers" style={defaultStyle} activeStyle={clickedStyle} className="navLink" >
+                Passengers List
+            </NavLink>
         </div>
     )
 };

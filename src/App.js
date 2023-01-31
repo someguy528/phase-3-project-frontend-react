@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import FlightList from './FlightList';
 import Home from './Home';
 import NavBar from './NavBar';
+import PassengersList from './PassengersList';
 import { Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -85,6 +86,9 @@ function App() {
     <div className="App">
       <NavBar />
       <Switch>
+        <Route path="/passengers" >
+          <PassengersList />
+        </Route>
         <Route path="/flights"> 
           <FlightList flights={flights} onBookingChange={handleBookingChange} 
           onBookingDelete={handleBookingDelete} onBookingAdd={handleBookingAdd}

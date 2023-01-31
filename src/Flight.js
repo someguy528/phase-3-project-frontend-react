@@ -7,13 +7,11 @@ function Flight({flights, onFlightDelete}){
     const history = useHistory();
     const flight = flights.find(f => f.id === parseFloat(flightId))
     
-
     const allBookings = flight.bookings.map(booking => {
         return (
           <section key={booking.id} > <Booking  booking={booking} /> <Link to={`${route}/bookings/${booking.id}`} >Check Booking# {booking.id}</Link> </section>  
         )
     })
-
 
     function handleDeleteClick(){
         if(flight.bookings.length > 0){return alert("The bookings for this flight should be empty before deleting!")}
@@ -37,7 +35,7 @@ function Flight({flights, onFlightDelete}){
             <h4> Flight ID : {flight.id}</h4>
             <button onClick={handleDeleteClick} >Delete Flight</button>
             <Link to={`${route}/edit`}> Edit Flight Info </Link>
-            {flight.bookings.length < 20 ? 
+            {flight.bookings.length < flight.plane.capacity ? 
             <div><Link to={`${route}/newBooking`} >Create A Booking</Link></div> : 
             <header>Bookings Full! </header> }
             
