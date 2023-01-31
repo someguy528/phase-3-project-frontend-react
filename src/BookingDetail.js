@@ -12,7 +12,7 @@ function BookingDetail({flights, onBookingDelete}){
     const {id , passenger , seat } = booking
 
     function handleDeleteClick(){
-        fetch(`http://localhost:9292/bookings/${booking.id}`, {
+        fetch(`http://localhost:9292/flights/${flightId}/bookings/${booking.id}`, {
             method: "DELETE"
         })
         .then(resp => resp.json())

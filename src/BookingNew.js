@@ -21,7 +21,8 @@ function BookingNew({ flights, onBookingAdd }) {
 
     function handleFormSubmit(e){
         e.preventDefault();
-        fetch(`http://localhost:9292/bookings`, {
+        // fetch(`http://localhost:9292/bookings`, {
+        fetch(`http://localhost:9292/flights/${flightId}/bookings`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

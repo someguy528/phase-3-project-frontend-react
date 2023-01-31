@@ -14,7 +14,7 @@ function BookingDetailEdit({flights, onBookingChange}){
     }
     function onSubmitForm(e){
         e.preventDefault();
-        fetch(`http://localhost:9292/bookings/${bookingId}`, {
+        fetch(`http://localhost:9292/flights/${flightId}/bookings/${bookingId}`, {
             method: "PATCH",
             headers: {
                 "Content-Type":"application/json"

@@ -1,12 +1,13 @@
 import Flight from "./Flight"
 import FlightListing from "./FlightListing"
+import FlightNew from "./FlightNew"
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom"
 import BookingDetail from "./BookingDetail"
 import BookingDetailEdit from "./BookingDetailEdit"
 import BookingNew from "./BookingNew"
 import { useState } from "react"
 
-function FlightList({flights, onBookingChange, onBookingDelete, onBookingAdd}){
+function FlightList({flights, onFlightAdd, onFlightDelete, onBookingChange, onBookingDelete, onBookingAdd}){
     const [mostBookings, setMostBookings] = useState("Whats the Most Bookings for a passenger?")
     const [mostPassengers, setMostPassengers] = useState("Who has the Most Bookings?")
 
@@ -28,7 +29,6 @@ function FlightList({flights, onBookingChange, onBookingDelete, onBookingAdd}){
         fetch("http://localhost:9292/bookings/most_bookings_passengers")
         .then(resp=>resp.json())
         .then(data => {
-            console.log(data)
             const mostBookingPassengers = data.map(data=> data.name).toString()
             setMostPassengers(`The passengers with the most bookings: ${mostBookingPassengers}`)
         })
@@ -45,6 +45,9 @@ function FlightList({flights, onBookingChange, onBookingDelete, onBookingAdd}){
                     <button onClick={handleBookingPassengersMostClick} > Click </button>
                     {allFlights}
                 </Route>
+                <Route exact path={`${route}/new`} >
+                    <FlightNew onFlightAdd={onFlightAdd} />
+                </Route>
                 <Route exact path={`${route}/:flightId/bookings/:bookingId/edit`} >
                     <BookingDetailEdit flights={flights} onBookingChange={onBookingChange} />
                 </Route>
@@ -55,7 +58,7 @@ function FlightList({flights, onBookingChange, onBookingDelete, onBookingAdd}){
                     <BookingNew flights={flights} onBookingAdd={onBookingAdd} />
                 </Route>
                 <Route exact path={`${route}/:flightId`} >
-                    <Flight flights={flights} />
+                    <Flight flights={flights} onFlightDelete={onFlightDelete} />
                 </Route>
             </Switch>
             
