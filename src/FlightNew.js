@@ -1,19 +1,33 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 
 function FlightNew({onFlightAdd}){
     const history = useHistory();
-
+    const [isFormLoaded, setIsFormLoaded] = useState(false)
+    const [availablePlanes, setAvailablePlanes] = useState([])
     const [flightForm, setFlightForm] = useState({
         destination: "",
         departure: "2023-07-19",
         plane_id: 3
     })
+    console.log(availablePlanes)
+
+    useEffect(()=> {
+        fetch("http://localhost:9292/planes")
+        .then(resp=>resp.json())
+        .then(data=> {
+            setAvailablePlanes(data)
+            setIsFormLoaded(true)
+        })
+    },[])
 
     function handleChange(e){
+        let value = e.target.value
+        if(e.target.name === "plane_id"){
+            value = parseFloat(value)}
         setFlightForm({
             ...flightForm,
-            [e.target.name]: e.target.value
+            [e.target.name]: value
         })
     }
     console.log(flightForm)
@@ -31,21 +45,27 @@ function FlightNew({onFlightAdd}){
         })
         .then(resp=>resp.json())
         .then(newFlight => {
+            const selectedPlane = availablePlanes.find(plane => plane.id === flightForm.plane_id)
             const newFlightObj ={
                 ...newFlight,
-                bookings : [] ,
+                bookings : [],
                 plane: {
-                    name: "Experimental Plane 3",
-                    capacity: 20,
-                    condition: "Top Shape!"
+                    id: selectedPlane.id, 
+                    name: selectedPlane.name,
+                    capacity: selectedPlane.capacity,
+                    condition: selectedPlane.condition
                 }
             }
-            console.log(newFlightObj);
             onFlightAdd(newFlightObj);
             history.push("/flights")
         })
-        
     }
+
+    if (!isFormLoaded) return <h1>Loading..</h1>
+
+    const planeOptions = availablePlanes.map(plane => {
+        return ( <option key={plane.id} value={plane.id} > {plane.name} </option> )
+    })
 
     return (
         <div>
@@ -57,6 +77,9 @@ function FlightNew({onFlightAdd}){
              min="2023-07-19" max="2023-07-31"></input>
              <header> Destination </header>
              <input type="text" value={flightForm.destination} onChange={handleChange} name="destination" />
+             <select name="plane_id" value={flightForm.plane_id} onChange={handleChange} > 
+                {planeOptions}
+             </select>
              <button>Submit</button>
              </form>
         </div>
