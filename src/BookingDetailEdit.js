@@ -33,19 +33,17 @@ function BookingDetailEdit({flights, onBookingChange}){
     }
     console.log(parentFlight.bookings)
 
-    const optionsArray = Array.from({length: 10}, (_, i) => i < 9 ? "A" + "0" + (i+1) : "A" + (i+1))
-    const optionsArray2 = Array.from({length: 10}, (_, i) => i < 9 ? "B" + "0" + (i+1) : "B" + (i+1))
+    const optionsArray = Array.from({length: 10}, (_, i) => i < 9 ? "A0" + (i+1) : "A" + (i+1))
+    const optionsArray2 = Array.from({length: 10}, (_, i) => i < 9 ? "B0" + (i+1) : "B" + (i+1))
     const seatsArray = optionsArray.concat(optionsArray2)
 
-    const seatOptions = seatsArray.map(seat => {
-        if(!parentFlight.bookings.some(booking => booking.seat === seat))
-        return ( <option key={seat} value={seat} > {seat} </option> )
-    })
+    const seatOptions = seatsArray.filter(seat => !parentFlight.bookings.some(booking => booking.seat === seat)).map(seat => {
+        return ( <option key={seat} value={seat} > {seat} </option>) 
+        })
 
     return (
         <form onSubmit={onSubmitForm} >
             <label> Editing Seating for Booking # {booking.id} </label>
-            {/* <input type="text" value={bookingForm} onChange={onFormChange} /> */}
             <select value={bookingForm} onChange={onFormChange}>
                 <option value="" > Pick a Seat </option>
                 {seatOptions}
