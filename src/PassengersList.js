@@ -18,12 +18,13 @@ function PassengersList(){
 
     const [mostBookings, setMostBookings] = useState("Whats the Most Bookings for a passenger?")
     const [mostPassengers, setMostPassengers] = useState("Who has the Most Bookings?")
+    const [bookingWithPassengers, setBookingWithPassengers] = useState(["Show booking amounts for each passenger"])
 
     function handleBookingMostClick(){
-        fetch("http://localhost:9292/bookings/most")
+        fetch("http://localhost:9292/bookings/most_bookings_amt")
         .then(resp=>resp.json())
         .then(data => {
-            const mostBookings = data[0][1]
+            const mostBookings = data
             setMostBookings(`The Most bookings for a passenger: ${mostBookings}`)
         })
     }
@@ -31,8 +32,16 @@ function PassengersList(){
         fetch("http://localhost:9292/bookings/most_bookings_passengers")
         .then(resp=>resp.json())
         .then(data => {
-            const mostBookingPassengers = data.map(data=> data.name).toString()
+            const mostBookingPassengers = data.toString()
             setMostPassengers(`The passengers with the most bookings: ${mostBookingPassengers}`)
+        })
+    }
+
+    function handleBookingGroupedPassengersClick(){
+        fetch("http://localhost:9292/bookings/passengers_grouped_with_bookings")
+        .then(resp=>resp.json())
+        .then(data => {
+            setBookingWithPassengers(data)
         })
     }
     
@@ -40,6 +49,10 @@ function PassengersList(){
 
     const allPassengers = passengers.map(passenger => {
         return (<p key={passenger.id} > Id # {passenger.id} / {passenger.name} <Link to={`${route}/${passenger.id}`} > Details </Link> </p>)
+    })
+
+    const allBookingsWithPassengers = bookingWithPassengers.map(pair => {
+        return (<h4 key={pair}> {pair} </h4> )
     })
 
     return (
@@ -56,7 +69,10 @@ function PassengersList(){
                     <button onClick={handleBookingMostClick} > Click </button>
                     <h3>{mostPassengers}</h3>
                     <button onClick={handleBookingPassengersMostClick} > Click </button>
+                    {allBookingsWithPassengers}
+                    <button onClick={handleBookingGroupedPassengersClick} > Click </button>
                     {allPassengers}
+                    
                 </section>
             </Route>
             </Switch>
