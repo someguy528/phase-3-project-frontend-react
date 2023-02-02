@@ -29,7 +29,7 @@ function PassengersList(){
         })
     }
     function handleBookingPassengersMostClick(){
-        fetch("http://localhost:9292/bookings/most_bookings_passengers")
+        fetch("http://localhost:9292/passengers/most_bookings_passengers")
         .then(resp=>resp.json())
         .then(data => {
             const mostBookingPassengers = data.toString()
@@ -38,7 +38,7 @@ function PassengersList(){
     }
 
     function handleBookingGroupedPassengersClick(){
-        fetch("http://localhost:9292/bookings/passengers_grouped_with_bookings")
+        fetch("http://localhost:9292/passengers/passengers_grouped_with_bookings")
         .then(resp=>resp.json())
         .then(data => {
             setBookingWithPassengers(data)
